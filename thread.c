@@ -1,9 +1,9 @@
 pthread_mutex_t lock_common;
 
 void *thread_a_hdl(void *data){
+	static int i = 0;
 	while(1){
-		usleep(500*1000);
-		cvi_printf("%s, locking.\n", __func__);
+		cvi_printf("%s, locking.cn=%d\n", __func__,++i);
 		pthread_mutex_lock(&lock_common);
 		cvi_printf("%s, locked.\n", __func__);
 		usleep(500*1000);
@@ -11,9 +11,10 @@ void *thread_a_hdl(void *data){
 }
 
 void *thread_b_hdl(void *data){
+	static int i = 0;
 	while(1){
 		usleep(500*1000);
-		cvi_printf("%s, unlocking.\n", __func__);
+		cvi_printf("%s, locking.cn=%d\n", __func__,++i);
 		pthread_mutex_unlock(&lock_common);
 		cvi_printf("%s, unlocked.\n", __func__);
 		usleep(500*1000);
